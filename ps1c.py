@@ -4,8 +4,6 @@
 #use bisectional search to solve for portion of slary to save
 
 
-
-
 annual_salary = float(input("Salary?"))
 total_cost = float(1000000)
 portion_down_payment = total_cost * .25
@@ -22,37 +20,38 @@ num_guesses = 1
 
 guess = ( max_savings + min_savings ) / 2
 
-
-while abs(current_savings - portion_down_payment) >= epsilon:
-    #calculate savings after 36 months where guess is portion saved
-    current_savings = 0
+#let check if savings is possible on your salary
+for i in range(1, months_saved + 1):
     annual_salary_mod = annual_salary
-    for i in range(1, months_saved + 1):
-        monthly_saving = (annual_salary_mod / 12) * guess
-        current_savings = current_savings * (1 + .04 / 12)
-        current_savings += monthly_saving
-        if i % 6 == 0:
-            annual_salary_mod = annual_salary_mod * (1 + semi_annual_raise)
-
-    if current_savings < portion_down_payment:
-        min_savings = guess
-    else:
-        max_savings = guess
-    guess = (max_savings + min_savings) / 2
-    num_guesses += 1
-
-print(guess)
-print(num_guesses)
-
-
-
-"""
-while current_savings < portion_down_payment:
-    monthly_saving = (annual_salary / 12) * portion_saved
+    monthly_saving = (annual_salary_mod / 12) * max_savings
     current_savings = current_savings * (1 + .04 / 12)
     current_savings += monthly_saving
-    months_saved += 1
-    if months_saved % 6 == 0:
-        annual_salary = annual_salary * (1 + semi_annual_raise)
-print(months_saved)
-"""
+    if i % 6 == 0:
+        annual_salary_mod = annual_salary_mod * (1 + semi_annual_raise)
+if current_savings < portion_down_payment:
+    print("It is not possible to pay the down payment in three years.")
+    quit()
+else:
+
+    #while approaching a smaller epsilon via if, else adjusting min and max targets if the basis of bisection method
+    while abs(current_savings - portion_down_payment) >= epsilon:
+        #calculate savings after 36 months where guess is portion saved
+        #we need to reset annual salary for each iteration of final current_savings
+        current_savings = 0
+        annual_salary_mod = annual_salary
+        for i in range(1, months_saved + 1):
+            monthly_saving = (annual_salary_mod / 12) * guess
+            current_savings = current_savings * (1 + .04 / 12)
+            current_savings += monthly_saving
+            if i % 6 == 0:
+                annual_salary_mod = annual_salary_mod * (1 + semi_annual_raise)
+
+        if current_savings < portion_down_payment:
+            min_savings = guess
+        else:
+            max_savings = guess
+        guess = (max_savings + min_savings) / 2
+        num_guesses += 1
+
+    print(guess)
+    print(num_guesses)
