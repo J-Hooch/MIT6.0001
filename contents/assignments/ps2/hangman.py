@@ -61,12 +61,16 @@ def is_word_guessed(secret_word, letters_guessed):
       False otherwise
     '''
     #turn secret word into list
-    secret_word_set = set(secret_word)
-    letters_guessed_set =set(letters_guessed)
-    if letters_guessed_set == secret_word_set:
-        return True
-    else:
-        return False
+    secret_word_list=list(secret_word)
+    letters_guessed_check = []
+    #make a list of only correctly guesed letters
+    for i in range(len(letters_guessed)):
+        for x in range(len(secret_word_list)):
+            if letters_guessed[i] == secret_word_list[x]:
+                letters_guessed_check.append(letters_guessed[i])
+
+    #compare correct guessed letters to secret word as sets
+    return set(letters_guessed_check) == set(secret_word_list)
 
 
 
@@ -180,7 +184,7 @@ def hangman(secret_word):
             quit()
 
     #Game is lost when you run out of guesses
-    print("You have ran out of guesses.You are a loser. Better luck next time")
+    print(f"You have ran out of guesses.You are a loser. Better luck next time.\nThe answer was{secret_word}")
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the first two lines to test
