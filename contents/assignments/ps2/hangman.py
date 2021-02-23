@@ -236,11 +236,9 @@ def show_possible_matches(my_word):
     temp = []
 
     for i in range(len(wordlist)):
-        #add same word length to temp
+        #add same word length and match with gaps to temp
         if len(my_word) ==len(wordlist[i]) and match_with_gaps(my_word,wordlist[i]):
             temp.append(wordlist[i])
-
-
 
     print(" ".join(temp))
 
@@ -280,6 +278,7 @@ def hangman_with_hints(secret_word):
     letters_guessed = []
     guesses_left = 6
     warning = 3
+    vowel = ["a","e","i","o","u"]
     print(f"Welcome to the game Hangman!\nI am thinking of a word that is {secret_word_length} letters long\n___")
 
     while guesses_left > 0:
@@ -321,6 +320,9 @@ def hangman_with_hints(secret_word):
         #check if guess is in secret word
         if guess in secret_word_list:
             print(f"Good guess: {get_guessed_word(secret_word, letters_guessed)}\n___")
+        elif guess in vowel:
+            print(f"Oops! That letter is not in my word: {get_guessed_word(secret_word,letters_guessed)}\n___")
+            guesses_left -= 2
         else:
             print(f"Oops! That letter is not in my word: {get_guessed_word(secret_word,letters_guessed)}\n___")
             guesses_left -= 1
