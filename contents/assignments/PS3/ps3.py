@@ -232,23 +232,24 @@ def is_valid_word(word, hand, word_list):
             valid = False
 
     #Check if word is a valid word in word list
-    if '*' in word:
+    if '*' in word and '*' in hand:
         wildcard = word.index('*')
         for letter in VOWELS:
-            valid = True
+            valid_2 = True
             word_mod_list = list(word_mod)
             word_mod_list[wildcard] = letter
             word_mod = "".join(word_mod_list)
             if word_mod in word_list:
-                break
+                 break
             else:
-                valid = False
+                valid_2 = False
 
     else:
+        valid_2 = True
         if word not in word_list:
             valid = False
 
-    return valid
+    return valid and valid_2
 
 #
 # Problem #5: Playing a hand
