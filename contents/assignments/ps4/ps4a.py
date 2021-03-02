@@ -23,7 +23,25 @@ def get_permutations(sequence):
     a different order than what is listed here.
     '''
 
-    pass #delete this line and replace with your code here
+    sequence_letters = list(sequence)
+    list_perm = []
+
+    if len(sequence) == 1:
+        return [sequence]
+    else:
+
+        for i in sequence_letters:
+            remaining_letters = [k for k in sequence_letters if k != i]
+            x = get_permutations(remaining_letters)
+            for j in x:
+                list_perm.append([i] + j)
+
+    return list_perm
+
+
+
+
+
 
 if __name__ == '__main__':
 #    #EXAMPLE
@@ -36,5 +54,5 @@ if __name__ == '__main__':
 #    to be three characters or fewer as you will have n! permutations for a 
 #    sequence of length n)
 
-    pass #delete this line and replace with your code here
+    print(get_permutations('abc'))
 
